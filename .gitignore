@@ -19,7 +19,3 @@ yarn-error.log*
 
 # build
 **/build
-
-# eslint-vscode
-.eslint.js
-vscode_setting.json
