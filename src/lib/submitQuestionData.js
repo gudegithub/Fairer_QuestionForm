@@ -9,28 +9,28 @@ firebase.initializeApp({
 });
 const db = firebase.firestore();
 
-const validateQuestionData = dataObject => {
-    const { choices, content, limitDate, target } = dataObject;
+const validateQuestionData = questionData => {
+    const { choices, content, limitDate, target } = questionData;
     if (!(choices && content && limitDate && target)) throw new Error('Unset property exists');
 };
 
-export const subminQuestionData = dataObject => {
-    try {
-        validateQuestionData(dataObject);
-        const { choices, content, limitDate, target } = dataObject;
-        const answer = Array(choices.length).fill(0);
-        const createdDate = new Date();
-        const respondent = [];
-        db.collection('questions').doc().set({
-            answer,
-            choices,
-            content,
-            createdDate,
-            limitDate,
-            respondent,
-            target
-        });
-    } catch(error) {
-        console.error(error);
-    }
+export const subminQuestionData = questionData => {
+  try {
+    validateQuestionData(questionData);
+    const { choices, content, limitDate, target } = questionData;
+    const answer = Array(choices.length).fill(0);
+    const createdDate = new Date();
+    const respondent = [];
+    db.collection('questions').doc().set({
+        answer,
+        choices,
+        content,
+        createdDate,
+        limitDate,
+        respondent,
+        target
+    });
+  } catch(error) {
+    console.error(error);
+  }
 };

@@ -1,13 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import questionForm from './components/questionForm';
-import * as serviceWorker from './serviceWorker';
+import QuestionForm from './components/QuestionForm';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <questionForm />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-serviceWorker.unregister();
+ReactDOM.render(<QuestionForm />, document.getElementById('root'));
