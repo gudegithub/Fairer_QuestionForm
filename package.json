@@ -2,12 +2,15 @@
   "name": "question_form",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": ".",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "firebase": "^7.14.0",
     "firebase-admin": "^8.10.0",
+    "lodash": "^4.17.15",
+    "material-ui": "^0.20.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
