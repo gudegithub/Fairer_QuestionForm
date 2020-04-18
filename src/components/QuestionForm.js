@@ -33,12 +33,48 @@ class QuestionForm extends Component {
     this.state = {
       content: '',
       numberOfAnswer: null,
-      isValidNumberOfAnswer: true,
-      answer: [],
+      isValidNumberOfChoices: true,
       remainingDays: null,
       isValidremainingDays: true,
       target: ''
     };
+  }
+
+  generateQuestionData() {
+    const {
+      content,
+      numberOfChoices,
+      remainingDays,
+      target
+    } = this.state;
+    const now = new Date();
+    const limitDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + remainingDays, 0 , 0, 0);
+    const choices = new Array(numberOfChoices)
+      .fill(1)
+      .map((n, i) => n + i)
+      .map(i => this.state[`choices${i}`]);
+    return {
+      choices,
+      content,
+      target,
+      limitDate
+    };
+  }
+
+  formInputChoices() {
+    const { numberOfChoices = 0 } = this.state;
+    const forms = new Array(numberOfChoices)
+      .fill(1)
+      .map((n, i) => n + i)
+      .map(i => 
+        <FormInput
+          key={`choice-${i}`}
+          label={`choice ${i}`}
+          name={`choice-${i}`}
+          handleChange={event => this.setState({ [`choice${i}`]: event.target.value })}
+        />
+      );
+    return <>{forms}</>;
   }
 
   render() {
@@ -64,36 +100,21 @@ class QuestionForm extends Component {
           handleChange={event => this.setState({ content: event.target.value })}
         />
         <FormInput
-          label='number of answer'
-          name='numberOfAnswer'
+          label='number of choices'
+          name='numberOfChoices'
           helperText='must be integer from 1 to 9'
-          isValid={this.state.isValidNumberOfAnswer}
+          isValid={this.state.isValidNumberOfChoices}
           handleChange={event => {
             const number = Number(event.target.value);
             if (isInteger(number) && number > 0 && number < 10) {
-              this.setState({ numberOfAnswer: number });
-              this.setState({ isValidNumberOfAnswer: true });
+              this.setState({ numberOfChoices: number });
+              this.setState({ isValidNumberOfChoices: true });
             } else {
-              this.setState({ isValidNumberOfAnswer: false });
+              this.setState({ isValidNumberOfChoices: false });
             }
           }}
         />
-        {/* {() => {
-          let answerForms = [];
-          for (let i; i < this.state.numberOfAnswer; i++) {
-            answerForms.push(
-              <FormInput
-                label={`answer  ${i}`}
-                name={`answer_${i}`}
-                handleChange={text => {
-                  let newAnswer = new Array(this.state.numberOfAnswer).fill('');
-                  for ()
-                }}
-              />
-            );
-          }
-          return answerForms;
-        }} */}
+        {this.formInputChoices()}
         <FormInput
           label='remaining days'
           name='remainingDays'
@@ -118,10 +139,10 @@ class QuestionForm extends Component {
           color='primary'
           disabled={
             isEmpty(this.state.content) ||
-            isEmpty(this.state.answer) ||
             !this.state.remainingDays ||
             isEmpty(this.state.target)
           }
+          onClick={() => subminQuestionData(this.generateQuestionData())} //wrap a function to ignore error
         >
           Submit
         </Button>

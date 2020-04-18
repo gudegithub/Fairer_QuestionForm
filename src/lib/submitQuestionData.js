@@ -12,6 +12,7 @@ const db = firebase.firestore();
 const validateQuestionData = questionData => {
     const { choices, content, limitDate, target } = questionData;
     if (!(choices && content && limitDate && target)) throw new Error('Unset property exists');
+    return;
 };
 
 export const subminQuestionData = questionData => {
